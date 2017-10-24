@@ -1,0 +1,31 @@
+---
+title: "web"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+install.packages("dplyr", repos="http://cran.us.r-project.org")
+install.packages("tidyr", repos="http://cran.us.r-project.org")
+install.packages("ggplot2", repos="http://cran.us.r-project.org")
+install.packages("haven", repos="http://cran.us.r-project.org")
+install.packages("ggridges", repos="http://cran.us.r-project.org")
+install.packages("janitor", repos="http://cran.us.r-project.org")
+library(tidyverse)
+library(haven)
+library(ggridges)
+library(janitor)
+```
+
+```{r}
+pups=read.csv("./data/FAS_pups.csv") %>%
+  clean_names() %>%
+  group_by(litter_number) %>%
+  gather(key=PD_outcome, value=days, pd_ears:pd_walk) %>%
+  na.omit() %>%
+  arrange(litter_number,pd_outcome)
+
+```
