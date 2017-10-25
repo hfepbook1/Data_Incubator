@@ -1,5 +1,5 @@
 ---
-title: "web"
+title: "Homework 4_Problem 1"
 output: html_document
 ---
 
@@ -8,12 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-install.packages("dplyr", repos="http://cran.us.r-project.org")
-install.packages("tidyr", repos="http://cran.us.r-project.org")
-install.packages("ggplot2", repos="http://cran.us.r-project.org")
-install.packages("haven", repos="http://cran.us.r-project.org")
-install.packages("ggridges", repos="http://cran.us.r-project.org")
-install.packages("janitor", repos="http://cran.us.r-project.org")
 library(tidyverse)
 library(haven)
 library(ggridges)
@@ -21,11 +15,18 @@ library(janitor)
 ```
 
 ```{r}
-pups=read.csv("./data/FAS_pups.csv") %>%
+pups = read.csv("./data/FAS_pups.csv") %>%
   clean_names() %>%
   group_by(litter_number) %>%
-  gather(key=PD_outcome, value=days, pd_ears:pd_walk) %>%
+  gather(key = PD_outcome, value = days, pd_ears:pd_walk) %>%
   na.omit() %>%
-  arrange(litter_number,pd_outcome)
+  arrange(litter_number,PD_outcome) %>%
+  separate(PD_outcome, into = c("remove", "PD_outcome"), sep = "_") %>%
+  select(-remove)
 
+pups %>%
+  group_by(PD_outcome) %>%
+  ggplot(aes(x = litter_number, y = days, group = PD_outcome,color = PD_outcome)) +
+  geom_smooth(se = FALSE) +
+  theme(axis.text.x = element_blank())
 ```
