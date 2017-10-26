@@ -30,3 +30,4 @@ pups %>%
   geom_smooth(se = FALSE) +
   theme(axis.text.x = element_blank())
 ```
+* We use litter_number as x-axis and the days reaching each developmental benchmark as y-axis, we found the time order of the development among ears, eyes,pivot and able to walk or not for each puppy and that it takes pups the most time to develop eyes and the least time to develop ears.
